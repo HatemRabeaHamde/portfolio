@@ -1,0 +1,64 @@
+/* Sits above the scroll thread so the line passes behind the band. */
+.strip {
+  position: relative;
+  z-index: 6;
+  background: var(--dark);
+  border-block: 1px solid rgba(255, 255, 255, 0.12);
+  height: 72px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+.strip:hover .track {
+  animation-play-state: paused;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding-right: 28px;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.main,
+.alt {
+  font-family: var(--font-serif), serif;
+  font-size: 26px;
+}
+
+.main {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.alt {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.star {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}

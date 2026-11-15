@@ -1,0 +1,76 @@
+.page {
+  position: relative;
+  overflow: hidden;
+  min-height: max(100svh, 760px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: calc(var(--nav-h) + 40px) var(--gutter) 60px;
+  text-align: center;
+}
+
+.page > * {
+  position: relative;
+}
+
+.page > .glow {
+  position: absolute;
+  left: calc(50% - 620px);
+  top: calc(50% - 470px);
+  width: 1240px;
+  height: 940px;
+}
+
+.page > .monogram {
+  position: absolute;
+  left: calc(50% + 53px);
+  top: calc(50% - 10px);
+  width: 746.567px;
+  height: 520px;
+  pointer-events: none;
+}
+
+.kicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+  color: #8c8c8c;
+}
+
+.code {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(180px, 25vw, 360px);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: #fff;
+}
+
+.title {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(30px, 3.1vw, 44px);
+  line-height: 1.1;
+  color: #fff;
+}
+
+.text {
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #a6a6a6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.curl {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.48px;
+  color: #666;
+}

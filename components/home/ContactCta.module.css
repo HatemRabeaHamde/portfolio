@@ -1,0 +1,147 @@
+.contact {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  padding: 160px max(var(--gutter), calc((100% - 1280px) / 2)) 56px;
+}
+
+.watermark {
+  position: absolute;
+  top: 0;
+  right: -87px;
+  width: 602.996px;
+  height: 420px;
+  pointer-events: none;
+}
+
+.cta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.48px;
+  color: var(--on-dark-2);
+}
+
+.title {
+  font-family: var(--font-hanken), sans-serif;
+  font-weight: 300;
+  font-size: clamp(52px, 8.4vw, 120px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--on-dark);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--font-hanken), sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.primary,
+.secondary {
+  border-radius: 999px;
+  padding: 20px 32px;
+  white-space: pre;
+  transition: background-color 0.25s, border-color 0.25s, transform 0.25s var(--ease);
+}
+
+.primary {
+  background: var(--on-dark);
+  color: #141414;
+}
+
+.primary:hover {
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.secondary {
+  border: 1px solid var(--on-dark-line);
+  color: var(--on-dark);
+}
+
+.secondary:hover {
+  border-color: var(--on-dark-2);
+}
+
+.arrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-weight: 400;
+}
+
+.footer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 28px;
+  border-top: 1px solid var(--on-dark-line);
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.socials {
+  display: flex;
+  gap: 32px;
+  color: var(--on-dark);
+}
+
+.socials a:hover,
+.top:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.meta {
+  display: flex;
+  gap: 32px;
+  color: var(--on-dark-2);
+  white-space: nowrap;
+}
+
+.top {
+  color: var(--on-dark);
+}
+
+@media (max-width: 900px) {
+  .contact {
+    gap: 80px;
+    padding-top: 120px;
+  }
+  .watermark {
+    width: 360px;
+    height: auto;
+    right: -60px;
+  }
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .primary,
+  .secondary {
+    padding: 16px 24px;
+    width: 100%;
+    text-align: center;
+  }
+  .socials {
+    gap: 20px;
+  }
+}

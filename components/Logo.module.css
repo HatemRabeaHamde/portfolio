@@ -1,0 +1,64 @@
+.logo {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  color: var(--on-dark);
+}
+
+.nav {
+  width: 175.721px;
+  height: 36px;
+}
+
+.footer {
+  width: 165.958px;
+  height: 34px;
+}
+
+.mark {
+  position: absolute;
+  left: 0;
+  top: 1.83%;
+  width: 28.71%;
+  height: 97.6%;
+}
+
+.divider {
+  position: absolute;
+  left: 31.18%;
+  top: 0;
+  width: 0.43%;
+  min-width: 1px;
+  height: 99.98%;
+  background: var(--on-dark);
+}
+
+.name {
+  position: absolute;
+  left: 36.04%;
+  top: 11.03%;
+  font-family: var(--font-montserrat), sans-serif;
+  font-size: 16.322px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.tag {
+  position: absolute;
+  left: 36.44%;
+  top: 60.06%;
+  font-family: var(--font-open-sans), sans-serif;
+  font-size: 5.913px;
+  letter-spacing: 1.3103px;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.footer .name {
+  font-size: 15.415px;
+}
+
+.footer .tag {
+  font-size: 5.585px;
+  letter-spacing: 1.2375px;
+}

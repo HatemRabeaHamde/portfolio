@@ -1,0 +1,325 @@
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 200px 0 72px;
+}
+
+.glow {
+  left: calc(50% - 720px + 500px - 160px);
+  top: calc(-60px - 160px);
+  width: 1220px;
+  height: 820px;
+}
+
+.heroInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.kicker {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.96px;
+  color: #8c8c8c;
+}
+
+.title {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(76px, 13.2vw, 190px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.heroFoot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding-top: 12px;
+}
+
+.heroLede {
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #bfbfbf;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+.filter {
+  padding: 9px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.filter:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.filter[aria-pressed="true"] {
+  background: #fff;
+  border-color: #fff;
+  color: var(--ink);
+}
+
+/* ---------- List ---------- */
+.listSection {
+  padding: 40px 0 140px;
+}
+
+.listHead,
+.row {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 420fr) minmax(0, 250fr) minmax(0, 236fr) auto;
+  gap: 24px;
+  align-items: center;
+}
+
+.listHead {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.88px;
+  color: #808080;
+}
+
+.row {
+  position: relative;
+  padding: 34px 0;
+  border-bottom: 1px solid #d9d9d9;
+  border-radius: 0;
+  transition:
+    background-color 0.35s var(--ease),
+    padding 0.35s var(--ease),
+    border-radius 0.35s var(--ease),
+    color 0.35s;
+}
+
+.no {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-size: 28px;
+  color: #737373;
+}
+
+.name {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(36px, 3.6vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.type {
+  font-size: 15px;
+  color: #737373;
+}
+
+.stack {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: #737373;
+}
+
+.end {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  transition: gap 0.35s var(--ease);
+}
+
+.thumb {
+  position: relative;
+  width: 0;
+  height: 128px;
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 0.45s var(--ease), opacity 0.35s;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  color: var(--ink);
+  transition: background-color 0.35s, border-color 0.35s;
+}
+
+/* Hover a row → it inverts and previews the project image. */
+.row:hover,
+.row:focus-visible {
+  background: var(--ink);
+  padding: 26px 24px;
+  border-radius: 20px;
+  border-bottom-color: transparent;
+}
+
+.row:hover .no,
+.row:hover .type,
+.row:hover .stack,
+.row:focus-visible .no,
+.row:focus-visible .type,
+.row:focus-visible .stack {
+  color: #999;
+}
+
+.row:hover .name,
+.row:focus-visible .name {
+  color: #fff;
+}
+
+.row:hover .end,
+.row:focus-visible .end {
+  gap: 16px;
+}
+
+.row:hover .thumb,
+.row:focus-visible .thumb {
+  width: 200px;
+  opacity: 1;
+}
+
+.row:hover .arrow,
+.row:focus-visible .arrow {
+  background: #fff;
+  border-color: #fff;
+}
+
+.empty {
+  padding: 34px 0;
+  color: var(--muted);
+}
+
+.strip {
+  display: flex;
+  gap: 16px;
+  padding-top: 74px;
+}
+
+.stripItem {
+  position: relative;
+  flex: 1;
+  height: 260px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.stripItem img {
+  object-fit: cover;
+  transition: transform 1s var(--ease);
+}
+
+.stripItem:hover img {
+  transform: scale(1.04);
+}
+
+/* ---------- CTA ---------- */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 130px var(--gutter);
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(52px, 7.2vw, 104px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 1180px) {
+  .listHead,
+  .row {
+    grid-template-columns: 56px minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+  .row:hover .thumb,
+  .row:focus-visible .thumb {
+    width: 140px;
+    height: 96px;
+  }
+}
+
+@media (max-width: 900px) {
+  .heroFoot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filters {
+    flex-shrink: 1;
+  }
+  .listHead {
+    display: none;
+  }
+  .row {
+    grid-template-columns: 40px 1fr auto;
+    grid-template-areas:
+      "no name end"
+      "no type end"
+      "no stack end";
+    row-gap: 6px;
+    padding: 24px 0;
+  }
+  .no {
+    grid-area: no;
+    font-size: 22px;
+    align-self: start;
+  }
+  .name {
+    grid-area: name;
+  }
+  .type {
+    grid-area: type;
+  }
+  .stack {
+    grid-area: stack;
+  }
+  .end {
+    grid-area: end;
+  }
+  .thumb {
+    display: none;
+  }
+  .row:hover,
+  .row:focus-visible {
+    padding: 24px 16px;
+  }
+  .strip {
+    flex-direction: column;
+  }
+  .stripItem {
+    flex: none;
+    height: 220px;
+  }
+}

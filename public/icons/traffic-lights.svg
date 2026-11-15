@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="55" height="13" viewBox="0 0 55 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Traffic Lights" clip-path="url(#clip0_0_18)">
+<g id="Ellipse">
+<circle cx="6.5" cy="6.5" r="6.5" fill="#D6D6D6"/>
+<circle cx="6.5" cy="6.5" r="6" stroke="black" stroke-opacity="0.08"/>
+</g>
+<g id="Ellipse_2">
+<circle cx="27.5" cy="6.5" r="6.5" fill="#D6D6D6"/>
+<circle cx="27.5" cy="6.5" r="6" stroke="black" stroke-opacity="0.08"/>
+</g>
+<g id="Ellipse_3">
+<circle cx="48.5" cy="6.5" r="6.5" fill="#D6D6D6"/>
+<circle cx="48.5" cy="6.5" r="6" stroke="black" stroke-opacity="0.08"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_18">
+<rect width="55" height="13" fill="white"/>
+</clipPath>
+</defs>
+</svg>

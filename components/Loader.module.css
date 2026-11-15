@@ -1,0 +1,89 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--dark);
+  color: #fff;
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:global(html[data-intro-seen]) .loader {
+  display: none;
+}
+
+.loader[data-phase="exit"] {
+  transform: translateY(-100%);
+}
+
+/* The design's annotation for the motion spec — kept off-screen for visitors. */
+.note {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.mark {
+  width: 186.642px;
+  height: 130px;
+}
+
+.track {
+  position: relative;
+  width: 220px;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.bar {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left;
+}
+
+.footLeft,
+.counter {
+  position: absolute;
+  bottom: 40px;
+  font-family: var(--font-mono), monospace;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.footLeft {
+  left: 48px;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: #666;
+}
+
+.counter {
+  right: 48px;
+  font-size: 12px;
+  letter-spacing: 1.44px;
+  color: #999;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .footLeft {
+    left: var(--gutter);
+    font-size: 9px;
+  }
+  .counter {
+    right: var(--gutter);
+  }
+}
