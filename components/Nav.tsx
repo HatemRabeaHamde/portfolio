@@ -7,13 +7,7 @@ import Logo from "./Logo";
 import { navLinks, site } from "@/lib/site";
 import styles from "./Nav.module.css";
 
-/**
- * Glass nav that fades on scroll:
- *  1. top of page — glass 6% white, blur 28
- *  2. scrolling down — fades to 40%, blur 20, slides up 8px
- *  3. scrolling up / hover — back to 100%
- * Over light sections it picks up a dark tint so the white type stays readable.
- */
+/** Hero-matched at the top; frosted glass after scrolling. */
 export default function Nav() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
@@ -31,8 +25,7 @@ export default function Nav() {
     const update = () => {
       ticking = false;
       const y = window.scrollY;
-      if (y < 24) setMode("top");
-      else if (Math.abs(y - lastY) > 4) setMode(y > lastY ? "down" : "up");
+      setMode(y < 24 ? "top" : y > lastY ? "down" : "up");
       lastY = y;
 
       const nav = navRef.current;
@@ -105,6 +98,7 @@ export default function Nav() {
   return (
     <header
       ref={navRef}
+      style={{ viewTransitionName: "site-nav" }}
       className={styles.nav}
       data-mode={open ? "up" : mode}
       data-tint={overLight || open ? "dark" : undefined}

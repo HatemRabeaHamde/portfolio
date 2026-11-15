@@ -289,3 +289,65 @@ em.serif,
 @media (hover: hover) and (pointer: fine) {
   body[data-cursor="true"], body[data-cursor="true"] a, body[data-cursor="true"] button, body[data-cursor="true"] input, body[data-cursor="true"] textarea { cursor: none; }
 }
+
+/* Route content moves softly while navigation remains a fixed visual anchor. */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+::view-transition-group(.page-flow) {
+  animation: none;
+}
+
+::view-transition-image-pair(.page-flow) {
+  isolation: isolate;
+}
+
+::view-transition-old(.page-flow) {
+  height: auto;
+  animation: page-leave 220ms ease-in both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(.page-flow) {
+  height: auto;
+  animation: page-enter 520ms var(--ease) both;
+  mix-blend-mode: normal;
+}
+
+@keyframes page-leave {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(-12px) scale(0.995); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(20px) scale(1.005); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+::view-transition-group(site-nav) {
+  animation: none;
+  z-index: 100;
+}
+
+::view-transition-old(site-nav) {
+  display: none;
+}
+
+::view-transition-new(site-nav) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

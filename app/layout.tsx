@@ -12,6 +12,7 @@ import Nav from "@/components/Nav";
 import Loader from "@/components/Loader";
 import Reveal from "@/components/Reveal";
 import Cursor from "@/components/Cursor";
+import PageTransition from "@/components/PageTransition";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -49,11 +50,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     .join(" ");
 
   return (
-    <html lang="en" className={fonts} suppressHydrationWarning>
+    <html lang="en" className={fonts} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <Loader />
         <Nav />
-        {children}
+        <PageTransition>{children}</PageTransition>
         <Reveal />
         <Cursor />
       </body>

@@ -1,0 +1,6 @@
+.content {
+  isolation: isolate;
+  /* The scroll thread blends with "difference" inside this isolated group, so the group needs the
+     page colour behind the light sections — otherwise the line stays white on white there. */
+  background: var(--bg);
+}

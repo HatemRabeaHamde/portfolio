@@ -3,37 +3,33 @@
   inset: 0 0 auto;
   z-index: 50;
   color: #fff;
-  background: rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(28px) saturate(140%);
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-  transition:
-    opacity 0.45s var(--ease),
-    transform 0.45s var(--ease),
-    background-color 0.35s,
-    backdrop-filter 0.35s;
-}
-
-.nav[data-tint="dark"] {
-  background: rgba(10, 10, 10, 0.72);
-}
-
-.nav[data-open] {
   background: var(--dark);
+  border-bottom: 1px solid transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transition:
+    background-color 0.45s var(--ease),
+    border-color 0.45s var(--ease),
+    backdrop-filter 0.45s var(--ease),
+    -webkit-backdrop-filter 0.45s var(--ease);
+}
+
+.nav:not([data-mode="top"]) {
+  background: rgba(10, 10, 10, 0.48);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
+}
+
+.nav:not([data-mode="top"])[data-tint="dark"] {
+  background: rgba(10, 10, 10, 0.68);
+}
+
+.nav[data-open][data-mode] {
+  background: var(--dark);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   min-height: 100svh;
-}
-
-.nav[data-mode="down"] {
-  opacity: 0.4;
-  transform: translateY(-8px);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.nav[data-mode="down"]:hover,
-.nav[data-mode="down"]:focus-within {
-  opacity: 1;
-  transform: none;
 }
 
 .inner {
