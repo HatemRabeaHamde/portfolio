@@ -16,6 +16,12 @@
   transform-origin: top left;
 }
 
+.detour {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
 @media (max-width: 900px) {
   .thread {
     display: none;

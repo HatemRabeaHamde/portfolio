@@ -65,6 +65,7 @@ export default function About() {
                 {"\n"}             <S>&quot;TypeScript&quot;</S>],
                 {"\n"}  ships: <S>&quot;MVP → validate → scale&quot;</S>,
                 {"\n"}  process: <S>&quot;Scrum · Agile&quot;</S>,
+                {"\n"}  tools: [<S>&quot;Slack&quot;</S>, <S>&quot;Shortcut&quot;</S>],
                 {"\n"}  based: <S>&quot;Cairo, Egypt&quot;</S>,
                 {"\n"}
                 {"};"}
