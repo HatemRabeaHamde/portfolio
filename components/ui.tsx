@@ -65,7 +65,7 @@ export function Divider({ compact = false }: { compact?: boolean }) {
     <div className={styles.divider} data-compact={compact || undefined} aria-hidden>
       <span />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/icons/monogram-dark.svg" alt="" width={31.586} height={22} data-thread-avoid />
+      <img src="/icons/monogram-dark.svg" alt="" width={31.586} height={22} />
       <span />
     </div>
   );

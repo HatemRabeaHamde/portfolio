@@ -65,17 +65,6 @@
   border-top: 1px solid var(--line);
 }
 
-/* Desktop: the scroll thread weaves through these gaps and acts as the divider. */
-@media (min-width: 901px) {
-  .rows {
-    gap: 76px;
-  }
-  .row + .row {
-    padding-top: 76px;
-    border-top: 0;
-  }
-}
-
 @keyframes fadeUp {
   from {
     opacity: 0;

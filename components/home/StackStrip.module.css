@@ -1,7 +1,4 @@
-/* Sits above the scroll thread so the line passes behind the band. */
 .strip {
-  position: relative;
-  z-index: 6;
   background: var(--dark);
   border-block: 1px solid rgba(255, 255, 255, 0.12);
   height: 72px;
