@@ -26,7 +26,7 @@ function Card({ p, size, flip, first }: { p: Project; size: Size; flip: boolean;
   const full = size === "full";
   const no = projectNo(p);
   return (
-    <Link href={projectHref(p)} className={styles.card} data-size={size} data-flip={flip || undefined}>
+    <Link href={projectHref(p)} className={styles.card} data-thread-frame data-size={size} data-flip={flip || undefined}>
       <BrowserFrame
         domain={p.domain}
         image={p.image}
@@ -69,6 +69,7 @@ export default function Projects() {
   return (
     <section id="projects" className={styles.projects} aria-label="Selected work">
       <div className={`container ${styles.inner}`}>
+        <div className={styles.intro} data-thread-frame>
         <SectionHeader
           no="02"
           label={`PROJECTS — ${projects.length}`}
@@ -97,6 +98,8 @@ export default function Projects() {
           <p className={styles.count}>
             {String(list.length).padStart(2, "0")} PROJECTS · 2022 — 2026
           </p>
+        </div>
+
         </div>
 
         <div className={styles.rows} aria-live="polite">

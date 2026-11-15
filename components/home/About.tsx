@@ -14,7 +14,7 @@ const S = ({ children }: { children: React.ReactNode }) => <span className={styl
 export default function About() {
   return (
     <section id="about" className={styles.about} aria-label="About">
-      <div className={`container ${styles.inner}`}>
+      <div className={`container ${styles.inner}`} data-thread-frame>
         <SectionHeader
           no="01"
           label="ABOUT — README.md"

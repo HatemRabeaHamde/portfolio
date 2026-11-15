@@ -1,53 +1,71 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { THREAD_H, THREAD_HERO_H, THREAD_POINTS, THREAD_W } from "./threadPath";
+import { THREAD_HERO_H, THREAD_POINTS, THREAD_W } from "./threadPath";
 import styles from "./Thread.module.css";
 
-/**
- * Thread — the scroll-drawn line from the design (blend: Difference).
- *
- * The original curve is mapped onto the live page: the hero part keeps the design's exact
- * proportions (so it passes behind the head), and the rest is stretched to the page's real
- * height. It is redrawn whenever the page size changes.
- */
-
-type Pt = [number, number];
-
-function buildPath(main: HTMLElement): { d: string; w: number; h: number } | null {
-  const portrait = main.querySelector<HTMLElement>("[data-thread-portrait]");
-  if (!portrait) return null;
+/** A continuous ink contour, measured around the actual content rather than stretched. */
+function buildPath(main: HTMLElement) {
   const origin = main.getBoundingClientRect();
   const w = main.clientWidth;
   const h = main.scrollHeight;
-  const heroBottom = portrait.getBoundingClientRect().bottom - origin.top;
-
-  // Horizontal: the 1440 design stage, centred like the hero.
   const stage = Math.min(w, THREAD_W);
-  const u = stage / THREAD_W;
-  const sx = (w - stage) / 2;
-  // Vertical: hero at design scale, everything below stretched to the page height.
-  const k = (h - heroBottom) / (THREAD_H - THREAD_HERO_H);
-  const mapY = (y: number) => (y <= THREAD_HERO_H ? (y * heroBottom) / THREAD_HERO_H : heroBottom + (y - THREAD_HERO_H) * k);
-
-  const pts: Pt[] = [[sx + THREAD_POINTS[0] * u, -40]];
-  for (let i = 0; i < THREAD_POINTS.length; i += 2) {
-    pts.push([sx + THREAD_POINTS[i] * u, mapY(THREAD_POINTS[i + 1])]);
-  }
-
-  // Smooth curve through the points (Catmull-Rom → cubic Bézier).
+  const scale = stage / THREAD_W;
+  const inset = (w - stage) / 2;
+  const portrait = main.querySelector<HTMLElement>("[data-thread-portrait]");
+  if (!portrait) return null;
+  const heroBottom = portrait.getBoundingClientRect().bottom - origin.top;
   const f = (n: number) => n.toFixed(1);
-  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`;
-  for (let i = 0; i < pts.length - 1; i++) {
-    const p0 = pts[i - 1] ?? pts[i];
-    const p1 = pts[i];
-    const p2 = pts[i + 1];
-    const p3 = pts[i + 2] ?? p2;
-    d +=
-      ` C${f(p1[0] + (p2[0] - p0[0]) / 6)} ${f(p1[1] + (p2[1] - p0[1]) / 6)}` +
-      ` ${f(p2[0] - (p3[0] - p1[0]) / 6)} ${f(p2[1] - (p3[1] - p1[1]) / 6)} ${f(p2[0])} ${f(p2[1])}`;
+  let d = `M${f(w / 2)} -40`;
+  // Keep the original portrait gesture; below it, follow live content boundaries.
+  for (let i = 0; i < THREAD_POINTS.length; i += 2) {
+    if (THREAD_POINTS[i + 1] > THREAD_HERO_H) break;
+    d += ` L${f(inset + THREAD_POINTS[i] * scale)} ${f(THREAD_POINTS[i + 1] * heroBottom / THREAD_HERO_H)}`;
   }
-  return { d, w, h };
+  const frames = Array.from(main.querySelectorAll<HTMLElement>("[data-thread-frame]")).map((el) => {
+    const box = el.getBoundingClientRect();
+    return {
+      top: box.top - origin.top,
+      bottom: box.bottom - origin.top,
+      left: Math.max(16, box.left - origin.left - 52),
+      right: Math.min(w - 16, box.right - origin.left + 52),
+    };
+  });
+  const nodes: { x: number; y: number }[] = [];
+  const center = w / 2;
+  if (frames.length) {
+    const firstTop = frames[0].top - 30;
+    const x = frames[0].left;
+    // Travel down the empty outer margin before joining the first broad sweep.
+    d += ` C${f(x)} ${f(heroBottom + 32)} ${f(x)} ${f(firstTop)} ${f(center)} ${f(firstTop)}`;
+  }
+  frames.forEach((frame, i) => {
+    const previous = frames[i - 1];
+    const next = frames[i + 1];
+    const top = previous ? (previous.bottom + frame.top) / 2 : frame.top - 30;
+    const bottom = next ? (frame.bottom + next.top) / 2 : Math.min(h - 16, frame.bottom + 36);
+    const side = i % 2 === 0 ? frame.right : frame.left;
+    const direction = i % 2 === 0 ? 1 : -1;
+    const height = bottom - top;
+    const upper = Math.min(210, height * (i % 2 === 0 ? 0.34 : 0.23));
+    const lower = Math.min(180, height * (i % 2 === 0 ? 0.22 : 0.33));
+    const shoulder = side - direction * Math.min(210, Math.abs(side - center) * 0.48);
+    const room = Math.max(0, Math.min(side - 12, w - 12 - side));
+    const bow = direction * Math.min(20, room);
+    const waist = side - direction * 14;
+    const middle = top + height * (i % 2 === 0 ? 0.56 : 0.44);
+    const endX = center + direction * Math.min(110, w * 0.075);
+    // Asymmetric shoulders and an S-shaped outer contour give each sweep its own rhythm.
+    // The inset waist remains outside the measured content boundary.
+    d += ` C${f(shoulder)} ${f(top)} ${f(side + bow)} ${f(top + upper * 0.24)} ${f(side)} ${f(top + upper)}`;
+    const upperReach = Math.max(12, (middle - top - upper) * 0.55);
+    const lowerReach = Math.max(12, (bottom - lower - middle) * 0.55);
+    d += ` C${f(side)} ${f(top + upper + upperReach)} ${f(waist)} ${f(middle - upperReach)} ${f(waist)} ${f(middle)}`;
+    d += ` C${f(waist)} ${f(middle + lowerReach)} ${f(side + bow)} ${f(bottom - lower - lowerReach)} ${f(side + bow)} ${f(bottom - lower)}`;
+    d += ` C${f(side + bow)} ${f(bottom - lower * 0.22)} ${f(shoulder)} ${f(bottom)} ${f(endX)} ${f(bottom)}`;
+    if (i < frames.length - 1) nodes.push({ x: endX, y: bottom });
+  });
+  return { d, w, h, nodes };
 }
 
 export default function Thread() {
@@ -61,30 +79,50 @@ export default function Thread() {
     const main = el?.parentElement;
     if (!el || !svg || !main) return;
     let raf = 0;
-    let last = "";
     const draw = () => {
       raf = 0;
       if (window.innerWidth <= 900) return;
       const res = buildPath(main);
       if (!res) return;
-      const key = `${res.w}x${res.h}`;
-      if (key === last) return;
-      last = key;
       svg.setAttribute("viewBox", `0 0 ${res.w} ${res.h}`);
       svg.setAttribute("width", String(res.w));
       svg.setAttribute("height", String(res.h));
       svg.querySelectorAll("path").forEach((path) => path.setAttribute("d", res.d));
+      const dots = svg.querySelector("g");
+      if (dots) {
+        dots.replaceChildren(...res.nodes.map(({ x, y }) => {
+          const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          dot.setAttribute("cx", String(x));
+          dot.setAttribute("cy", String(y));
+          dot.setAttribute("r", "3.4");
+          return dot;
+        }));
+      }
     };
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(draw);
     };
     schedule();
     const ro = new ResizeObserver(schedule);
-    ro.observe(main);
+    const observeFrames = () => {
+      ro.observe(main);
+      main.querySelectorAll("section, [data-thread-frame]").forEach((frame) => ro.observe(frame));
+    };
+    observeFrames();
+    const mutations = new MutationObserver((records) => {
+      if (records.every((record) => el.contains(record.target))) return;
+      observeFrames();
+      schedule();
+    });
+    mutations.observe(main, { childList: true, subtree: true });
+    document.fonts.ready.then(schedule);
+    window.addEventListener("resize", schedule);
     window.addEventListener("load", schedule);
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      mutations.disconnect();
+      window.removeEventListener("resize", schedule);
       window.removeEventListener("load", schedule);
     };
   }, []);
@@ -117,9 +155,8 @@ export default function Thread() {
   return (
     <div ref={ref} className={styles.thread} aria-hidden>
       <svg ref={svgRef} className={styles.svg} fill="none">
-        <path className={styles.ghost} stroke="white" strokeOpacity={0.12} strokeWidth={1} />
-        <path className={styles.echo} stroke="white" strokeOpacity={0.45} strokeWidth={0.8} />
-        <path stroke="white" strokeWidth={1.6} strokeLinecap="round" />
+        <path stroke="white" strokeOpacity={0.56} strokeWidth={1.65} strokeLinecap="round" />
+        <g fill="none" stroke="white" strokeOpacity="0.78" strokeWidth="1.35" />
       </svg>
     </div>
   );

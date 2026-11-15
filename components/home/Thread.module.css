@@ -15,29 +15,6 @@
   overflow: visible;
 }
 
-/* The two thin strands drift slowly around the main line. */
-.echo {
-  transform: translate(7px, 3px);
-  animation: echo 7s ease-in-out infinite alternate;
-}
-
-.ghost {
-  transform: translate(-6px, 5px);
-  animation: ghost 11s ease-in-out infinite alternate;
-}
-
-@keyframes echo {
-  to {
-    transform: translate(-5px, 10px);
-  }
-}
-
-@keyframes ghost {
-  to {
-    transform: translate(10px, -4px);
-  }
-}
-
 @media (max-width: 900px) {
   .thread {
     display: none;
@@ -47,9 +24,5 @@
 @media (prefers-reduced-motion: reduce) {
   .thread {
     clip-path: none;
-  }
-  .echo,
-  .ghost {
-    animation: none;
   }
 }

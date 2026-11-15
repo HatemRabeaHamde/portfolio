@@ -3,7 +3,8 @@
   scroll-margin-top: 40px;
 }
 
-.inner {
+.inner,
+.intro {
   display: flex;
   flex-direction: column;
   gap: 56px;
@@ -62,7 +63,6 @@
 
 .row + .row {
   padding-top: 56px;
-  border-top: 1px solid var(--line);
 }
 
 @keyframes fadeUp {

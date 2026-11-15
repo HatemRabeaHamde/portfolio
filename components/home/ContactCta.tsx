@@ -10,7 +10,7 @@ export default function ContactCta() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/icons/hr-watermark.svg" alt="" aria-hidden className={styles.watermark} width={603} height={420} />
 
-      <div className={styles.cta}>
+      <div className={styles.cta} data-thread-frame>
         <p className={styles.label}>(CONTACT)</p>
         <h2 className={styles.title}>
           Have an idea?

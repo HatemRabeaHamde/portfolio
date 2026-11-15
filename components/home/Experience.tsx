@@ -31,7 +31,7 @@ const jobs = [
 export default function Experience() {
   return (
     <section id="experience" className={styles.experience} aria-label="Experience">
-      <div className={`container ${styles.inner}`}>
+      <div className={`container ${styles.inner}`} data-thread-frame>
         <SectionHeader
           no="04"
           label="EXPERIENCE — experience.log"

@@ -85,7 +85,7 @@ function Json() {
 export default function Skills() {
   return (
     <section id="skills" className={styles.skills} aria-label="Skills">
-      <div className={`container ${styles.inner}`}>
+      <div className={`container ${styles.inner}`} data-thread-frame>
         <SectionHeader
           no="03"
           label="SKILLS — skills.json"
