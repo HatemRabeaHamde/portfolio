@@ -1,141 +1,130 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { THREAD_POINTS } from "./threadPath";
 import styles from "./Thread.module.css";
 
-/** The original three-strand Figma artwork, revealed as the visitor scrolls. */
+type Point = [number, number];
+
+/** The reference site's living ink thread, anchored to our actual section positions. */
 export default function Thread() {
   const ref = useRef<HTMLDivElement>(null);
-  const artworkRef = useRef<HTMLImageElement>(null);
-  const detourRef = useRef<SVGSVGElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const el = ref.current;
-    const artwork = artworkRef.current;
+    const svg = svgRef.current;
     const main = el?.parentElement;
-    if (!el || !artwork || !main) return;
-    const overlay = detourRef.current;
-    let sourcePaths: SVGPathElement[] = [];
-    let disposed = false;
+    if (!el || !svg || !main) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const paths = Array.from(svg.querySelectorAll("path"));
+    const dot = svg.querySelector("circle");
+    let way: Point[] = [];
+    let width = 0;
+    let height = 0;
     let raf = 0;
-    const resize = () => {
-      raf = 0;
-      // Keep the exported SVG at its native dimensions; scale its presentation only.
-      const width = main.clientWidth;
-      const height = el.clientHeight;
-      artwork.style.transform = `scale(${width / 1440}, ${height / 8081})`;
-      const section = main.querySelector<HTMLElement>("#leadership");
-      const content = section?.firstElementChild;
-      if (!section || !content || !overlay || !sourcePaths.length) return;
-      const origin = main.getBoundingClientRect();
-      const bounds = section.getBoundingClientRect();
-      const cards = content.getBoundingClientRect();
-      const sectionTop = bounds.top - origin.top;
-      const endY = Math.min(height - 1, bounds.bottom - origin.top + 28);
-      let startY = Math.max(0, sectionTop - 70);
-      // Begin at the last left-hand turn, so the detour never cuts across the cards.
-      for (let i = 2; i < THREAD_POINTS.length - 2; i += 2) {
-        const y = THREAD_POINTS[i + 1] * height / 8081;
-        if (y > sectionTop - 30) break;
-        if (THREAD_POINTS[i] <= THREAD_POINTS[i - 2] && THREAD_POINTS[i] < THREAD_POINTS[i + 2]) startY = y;
-      }
-      const gutter = Math.max(16, cards.left - origin.left - 48);
-      const floor = endY - 8;
-      artwork.style.maskImage = `linear-gradient(to bottom, black 0px, black ${startY * 8081 / height}px, transparent ${startY * 8081 / height}px, transparent ${endY * 8081 / height}px, black ${endY * 8081 / height}px)`;
-      overlay.setAttribute("viewBox", `0 0 ${width} ${height}`);
-      overlay.setAttribute("width", String(width));
-      overlay.setAttribute("height", String(height));
-      const pointAtY = (path: SVGPathElement, y: number) => {
-        let low = 0;
-        let high = path.getTotalLength();
-        for (let i = 0; i < 32; i++) {
-          const mid = (low + high) / 2;
-          if (path.getPointAtLength(mid).y * height / 8081 < y) low = mid;
-          else high = mid;
-        }
-        const point = path.getPointAtLength((low + high) / 2);
-        return { x: point.x * width / 1440, y: point.y * height / 8081 };
-      };
-      overlay.replaceChildren(...sourcePaths.map((source, i) => {
-        const start = pointAtY(source, startY);
-        const end = pointAtY(source, endY);
-        const side = gutter + (i - 2) * 5;
-        const baseline = floor + (i - 2) * 4;
-        const turn = Math.min(180, (endY - startY) * 0.25);
-        const path = source.cloneNode(false) as SVGPathElement;
-        path.removeAttribute("id");
-        path.setAttribute("fill", "none");
-        path.setAttribute("d", `M${start.x} ${start.y} C${start.x} ${startY + 70} ${side} ${sectionTop - 40} ${side} ${sectionTop + 80} C${side} ${sectionTop + 200} ${side - 10} ${baseline - turn} ${side + 32} ${baseline - turn * 0.5} C${side + 92} ${baseline + 24} ${end.x - 110} ${baseline} ${end.x} ${end.y}`);
-        return path;
-      }));
+    let lastPaint = -Infinity;
+    let phase = 0;
 
+    const build = () => {
+      const origin = main.getBoundingClientRect().top;
+      width = main.clientWidth;
+      height = el.clientHeight;
+      const bounds = (selector: string) => {
+        const frame = main.querySelector(selector)?.getBoundingClientRect();
+        return { top: (frame?.top ?? origin) - origin, height: frame?.height ?? 0 };
+      };
+      const hero = bounds("section:first-child");
+      const about = bounds("#about");
+      const projects = bounds("#projects");
+      const skills = bounds("#skills");
+      const experience = bounds("#experience");
+      const leadership = bounds("#leadership");
+      const contact = bounds("#contact");
+      const gutter = Math.max(20, (width - Math.min(1120, width - 64)) / 4);
+      const left = gutter;
+      const right = width - gutter;
+      way = [
+        [width * 0.5, 0], [width * 0.5, hero.height * 0.12],
+        [right, hero.height * 0.45], [left, about.top + 120],
+        [left, about.top + about.height * 0.7], [right, projects.top + 80],
+        [right, projects.top + projects.height * 0.45],
+        [left, projects.top + projects.height * 0.75], [right, skills.top + 100],
+        [left, experience.top + 60], [left, experience.top + experience.height * 0.8],
+        [left, leadership.top + 40], [left, leadership.top + leadership.height - 80],
+        [width * 0.5, leadership.top + leadership.height + 32],
+        [right, contact.top + contact.height * 0.55], [width * 0.5, height],
+      ];
+      // Retain increasing anchors even when filtering collapses the project section.
+      way = way.filter((point, i, points) => i === 0 || point[1] > points[i - 1][1]);
+      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svg.setAttribute("width", String(width));
+      svg.setAttribute("height", String(height));
+      lastPaint = -Infinity;
+    };
+    const baseX = (y: number) => {
+      for (let i = 0; i < way.length - 1; i++) {
+        const [x0, y0] = way[i];
+        const [x1, y1] = way[i + 1];
+        if (y >= y0 && y <= y1) {
+          const t = (y - y0) / (y1 - y0);
+          return x0 + (x1 - x0) * t * t * (3 - 2 * t);
+        }
+      }
+      return width / 2;
+    };
+    const xAt = (y: number, shift: number, amplitude: number, offset: number) =>
+      baseX(y) + Math.sin(y / 170 + shift) * amplitude + Math.sin(y / 53 + shift * 1.7) * amplitude * 0.18 + offset;
+    const paint = (now: number) => {
+      raf = 0;
+      if (width > 900 && !document.hidden && now - lastPaint >= 32) {
+        lastPaint = now;
+        phase = reduced.matches ? 0 : now / 1000 * 0.9;
+        const strands = [[phase * 0.6, 36, 0], [phase + 1.4, 22, 6], [phase, 28, 0]];
+        paths.forEach((path, i) => {
+          const [shift, amplitude, offset] = strands[i];
+          const commands: string[] = [];
+          for (let y = 0; y <= height; y += 18) {
+            commands.push(`${y ? "L" : "M"}${xAt(y, shift, amplitude, offset).toFixed(1)} ${y}`);
+          }
+          commands.push(`L${xAt(height, shift, amplitude, offset).toFixed(1)} ${height}`);
+          path.setAttribute("d", commands.join(" "));
+        });
+        const drawnTo = Math.max(0, Math.min(height, window.innerHeight * 0.8 - el.getBoundingClientRect().top));
+        el.style.setProperty("--drawn", `${height ? (1 - drawnTo / height) * 100 : 100}%`);
+        dot?.setAttribute("cx", String(xAt(drawnTo, phase, 28, 0)));
+        dot?.setAttribute("cy", String(drawnTo - 2));
+      }
+      if (!reduced.matches && width > 900) raf = requestAnimationFrame(paint);
     };
     const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(resize);
+      if (!raf) raf = requestAnimationFrame(paint);
     };
-    const observer = new ResizeObserver(schedule);
+    const resize = () => { build(); schedule(); };
+    const observer = new ResizeObserver(resize);
     observer.observe(main);
-    const leadership = main.querySelector("#leadership");
-    if (leadership) observer.observe(leadership);
-    const abort = new AbortController();
-    fetch("/icons/scroll-thread-figma.svg", { signal: abort.signal })
-      .then((response) => response.text())
-      .then((source) => {
-        if (disposed) return;
-        const document = new DOMParser().parseFromString(source, "image/svg+xml");
-        sourcePaths = Array.from(document.querySelectorAll<SVGPathElement>("path"));
-        schedule();
-      })
-      .catch(() => { /* Keep the original artwork if the detour cannot load. */ });
-    document.fonts.ready.then(schedule);
-    schedule();
+    main.querySelectorAll("section").forEach((section) => observer.observe(section));
+    document.fonts.ready.then(resize);
+    window.addEventListener("resize", resize);
+    window.addEventListener("scroll", schedule, { passive: true });
+    reduced.addEventListener("change", resize);
+    resize();
     return () => {
-      disposed = true;
-      abort.abort();
       cancelAnimationFrame(raf);
       observer.disconnect();
-    };
-  }, []);
-
-  // Reveal the line top-to-bottom as the page scrolls, a little ahead of the viewport.
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const rect = el.getBoundingClientRect();
-      const drawnTo = window.innerHeight * 0.85 - rect.top;
-      const pct = Math.max(0, Math.min(1, drawnTo / rect.height));
-      el.style.setProperty("--drawn", `${(1 - pct) * 100}%`);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", schedule);
+      reduced.removeEventListener("change", resize);
     };
   }, []);
 
   return (
     <div ref={ref} className={styles.thread} aria-hidden>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={artworkRef}
-        className={styles.artwork}
-        src="/icons/scroll-thread-figma.svg"
-        alt=""
-        width={1440}
-        height={8081}
-        draggable={false}
-      />
-      <svg ref={detourRef} className={styles.detour} fill="none" />
+      <svg ref={svgRef} className={styles.svg} fill="none" stroke="white" strokeLinecap="round">
+        <path strokeWidth="1" strokeOpacity="0.08" />
+        <path strokeWidth="0.8" strokeOpacity="0.45" />
+        <path strokeWidth="1.6" />
+        <circle r="3" fill="white" stroke="none" />
+      </svg>
     </div>
   );
 }

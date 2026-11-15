@@ -72,7 +72,7 @@ function Json() {
       <pre className={styles.pre}>
         <code>
           {out.map((line, i) => (
-            <span key={i} className={styles.line}>
+            <span key={i} className={styles.line} style={{ "--line-delay": `${i * 0.12}s` } as React.CSSProperties}>
               {line}
             </span>
           ))}

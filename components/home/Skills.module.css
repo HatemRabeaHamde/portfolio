@@ -1,5 +1,5 @@
 .skills {
-  padding: 72px 0 40px;
+  padding: 150px 0 40px;
   scroll-margin-top: 40px;
 }
 
@@ -71,7 +71,7 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 18px 22px;
+  padding: 22px 24px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -80,7 +80,8 @@
 
 .focus li:hover {
   border-color: #cfcfcf;
-  transform: translateY(-2px);
+  transform: translateX(-8px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
 }
 
 .file {
@@ -96,7 +97,7 @@
 
 .text {
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--muted);
 }
 
@@ -117,3 +118,9 @@
     padding: 20px 16px;
   }
 }
+
+.grid:global(.is-in) .line { animation: typeLine 0.55s steps(24, end) both; animation-delay: var(--line-delay); }
+.pre code::after { content: ""; display: inline-block; width: 9px; height: 18px; background: var(--ink); vertical-align: -3px; animation: caretBlink 1s steps(1) infinite; }
+@keyframes typeLine { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes caretBlink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .grid:global(.is-in) .line { animation: none; } .pre code::after { animation: none; } }

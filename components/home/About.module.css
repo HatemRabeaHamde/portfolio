@@ -1,5 +1,5 @@
 .about {
-  padding: 80px 0 40px;
+  padding: 150px 0 40px;
   scroll-margin-top: 40px;
 }
 
@@ -27,15 +27,16 @@
   flex: 1;
   font-family: var(--font-serif), serif;
   font-style: italic;
-  font-size: clamp(28px, 3.6vw, 44px);
-  line-height: 1.18;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.15;
   letter-spacing: -0.01em;
 }
 
 .windows {
-  display: flex;
+  display: grid;
   gap: 24px;
   align-items: stretch;
+  grid-template-columns: 1.25fr 1fr;
 }
 
 .readme {
@@ -48,7 +49,7 @@
   flex-direction: column;
   gap: 16px;
   padding: 30px 32px;
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.65;
   color: var(--ink-2);
 }
@@ -62,7 +63,8 @@
 }
 
 .code {
-  width: 470px;
+  min-width: 0;
+  width: auto;
   flex-shrink: 0;
 }
 
@@ -70,7 +72,7 @@
   margin: 0;
   padding: 28px;
   font-family: var(--font-mono), monospace;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.85;
   color: #8a8a8a;
   overflow-x: auto;
@@ -114,7 +116,7 @@
 
 .principles h3 {
   font-family: var(--font-serif), serif;
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1.15;
 }
 
@@ -126,7 +128,7 @@
 
 @media (max-width: 1000px) {
   .windows {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
   .code {
     width: 100%;

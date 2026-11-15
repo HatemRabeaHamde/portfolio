@@ -17,6 +17,8 @@ import styles from "./Nav.module.css";
 export default function Nav() {
   const pathname = usePathname();
   const navRef = useRef<HTMLElement>(null);
+  const linksRef = useRef<HTMLElement>(null);
+  const pillRef = useRef<HTMLSpanElement>(null);
   const [mode, setMode] = useState<"top" | "down" | "up">("top");
   const [overLight, setOverLight] = useState(false);
   const [spy, setSpy] = useState<string | null>(null);
@@ -82,6 +84,24 @@ export default function Nav() {
     return false;
   };
 
+  const movePill = (link: HTMLElement | null) => {
+    const pill = pillRef.current;
+    if (!pill) return;
+    pill.style.opacity = link ? "1" : "0";
+    if (link) {
+      pill.style.width = `${link.offsetWidth}px`;
+      pill.style.transform = `translateX(${link.offsetLeft}px)`;
+    }
+  };
+
+  useEffect(() => {
+    const update = () => movePill(linksRef.current?.querySelector<HTMLElement>('[aria-current="page"]') ?? null);
+    update();
+    window.addEventListener("resize", update);
+    document.fonts.ready.then(update);
+    return () => window.removeEventListener("resize", update);
+  }, [pathname, spy]);
+
   return (
     <header
       ref={navRef}
@@ -95,7 +115,13 @@ export default function Nav() {
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className={styles.links}>
+        <nav ref={linksRef} aria-label="Main" className={styles.links}
+          onPointerOver={(event) => movePill((event.target as Element).closest("a"))}
+          onPointerLeave={() => movePill(linksRef.current?.querySelector<HTMLElement>('[aria-current="page"]') ?? null)}
+          onFocus={(event) => movePill((event.target as Element).closest("a"))}
+          onBlur={() => movePill(linksRef.current?.querySelector<HTMLElement>('[aria-current="page"]') ?? null)}
+        >
+          <span ref={pillRef} className={styles.activePill} aria-hidden />
           {navLinks.map((l) => (
             <Link
               key={l.id}

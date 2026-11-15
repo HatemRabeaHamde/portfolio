@@ -2,7 +2,7 @@
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 200px 0 72px;
+  padding: 190px 0 72px;
 }
 
 .glow {
@@ -28,9 +28,9 @@
 
 .title {
   font-family: var(--font-serif), serif;
-  font-size: clamp(76px, 13.2vw, 190px);
-  line-height: 0.92;
-  letter-spacing: -0.04em;
+  font-size: clamp(72px, 11vw, 160px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   color: #fff;
 }
 
@@ -75,7 +75,7 @@
 
 /* ---------- List ---------- */
 .listSection {
-  padding: 40px 0 140px;
+  padding: 72px 0 120px;
 }
 
 .listHead,
@@ -116,7 +116,7 @@
 
 .name {
   font-family: var(--font-serif), serif;
-  font-size: clamp(36px, 3.6vw, 52px);
+  font-size: clamp(28px, 3vw, 42px);
   line-height: 1;
   letter-spacing: -0.015em;
   color: var(--ink);
@@ -140,19 +140,6 @@
   transition: gap 0.35s var(--ease);
 }
 
-.thumb {
-  position: relative;
-  width: 0;
-  height: 128px;
-  border-radius: 12px;
-  overflow: hidden;
-  opacity: 0;
-  transition: width 0.45s var(--ease), opacity 0.35s;
-}
-
-.thumb img {
-  object-fit: cover;
-}
 
 .arrow {
   display: grid;
@@ -194,11 +181,6 @@
   gap: 16px;
 }
 
-.row:hover .thumb,
-.row:focus-visible .thumb {
-  width: 200px;
-  opacity: 1;
-}
 
 .row:hover .arrow,
 .row:focus-visible .arrow {
@@ -264,11 +246,6 @@
   .row {
     grid-template-columns: 56px minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) auto;
   }
-  .row:hover .thumb,
-  .row:focus-visible .thumb {
-    width: 140px;
-    height: 96px;
-  }
 }
 
 @media (max-width: 900px) {
@@ -308,9 +285,6 @@
   .end {
     grid-area: end;
   }
-  .thumb {
-    display: none;
-  }
   .row:hover,
   .row:focus-visible {
     padding: 24px 16px;
@@ -323,3 +297,11 @@
     height: 220px;
   }
 }
+
+.preview { position: fixed; left: 0; top: 0; width: 340px; height: 230px; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 60; background: #1a1a1a; opacity: 0; transform: scale(0.85); transition: opacity 0.35s, transform 0.35s var(--ease); box-shadow: 0 30px 80px rgba(0,0,0,0.35); }
+.preview[data-visible] { opacity: 1; transform: scale(1); }
+.preview img { object-fit: cover; opacity: 0; transition: opacity 0.3s; }
+.preview img[data-active] { opacity: 1; }
+.row:hover .arrow { transform: rotate(45deg); }
+.arrow { transition: transform 0.4s var(--ease), background-color 0.4s, border-color 0.4s; }
+@media (hover: none), (pointer: coarse), (max-width: 900px) { .preview { display: none; } }

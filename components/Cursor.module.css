@@ -1,0 +1,8 @@
+.dot, .ring { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 300; mix-blend-mode: difference; border-radius: 50%; opacity: 0; }
+.dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: white; }
+.ring { width: 40px; height: 40px; margin: -20px 0 0 -20px; border: 1px solid white; display: grid; place-items: center; transition: width 0.35s, height 0.35s, margin 0.35s, background 0.35s; }
+.ring span { font-family: var(--font-mono), monospace; font-size: 10px; letter-spacing: 0.12em; color: black; opacity: 0; }
+.ring[data-kind="hover"] { width: 64px; height: 64px; margin: -32px 0 0 -32px; }
+.ring[data-kind="view"] { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: white; }
+.ring[data-kind="view"] span { opacity: 1; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) { .dot, .ring { display: none; } }

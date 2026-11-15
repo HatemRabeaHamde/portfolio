@@ -2,34 +2,14 @@
   --drawn: 100%;
   position: absolute;
   inset: 0 0 2px;
-  z-index: 5;
+  z-index: 1;
   pointer-events: none;
   mix-blend-mode: difference;
   clip-path: inset(0 0 var(--drawn) 0);
 }
-
-.artwork {
-  position: absolute;
-  inset: 0;
-  display: block;
-  max-width: none;
-  transform-origin: top left;
-}
-
-.detour {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-}
-
-@media (max-width: 900px) {
-  .thread {
-    display: none;
-  }
-}
-
+.svg { position: absolute; inset: 0; display: block; overflow: visible; }
+@media (max-width: 900px) { .thread { display: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .thread {
-    clip-path: none;
-  }
+  .thread { clip-path: none; }
+  .svg circle { display: none; }
 }

@@ -10,7 +10,7 @@
 .track {
   display: flex;
   width: max-content;
-  animation: marquee 48s linear infinite;
+  animation: marquee 44s linear infinite;
 }
 
 .strip:hover .track {

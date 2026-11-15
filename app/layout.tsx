@@ -11,6 +11,7 @@ import {
 import Nav from "@/components/Nav";
 import Loader from "@/components/Loader";
 import Reveal from "@/components/Reveal";
+import Cursor from "@/components/Cursor";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Nav />
         {children}
         <Reveal />
+        <Cursor />
       </body>
     </html>
   );

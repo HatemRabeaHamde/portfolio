@@ -1,4 +1,5 @@
 import { SectionHeader, Window } from "@/components/ui";
+import ScrollQuote from "./ScrollQuote";
 import styles from "./About.module.css";
 
 const principles = [
@@ -29,7 +30,7 @@ export default function About() {
           <span className={styles.mark} aria-hidden>
             “
           </span>
-          <p>I build the parts of a product you see — and the parts that keep it running.</p>
+          <ScrollQuote text="I build the parts of a product you see — and the parts that keep it running." />
         </blockquote>
 
         <div className={`reveal ${styles.windows}`}>

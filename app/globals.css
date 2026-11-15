@@ -15,11 +15,11 @@
   --on-dark-2: #8c8c88;
   --on-dark-line: #2a2a28;
 
-  --shadow-window: 0 2px 6px rgba(0, 0, 0, 0.05), 0 24px 60px rgba(26, 20, 13, 0.14);
-  --gutter: 16px;
+  --shadow-window: 0 30px 60px rgba(0, 0, 0, 0.06);
+  --gutter: 32px;
   --container: 1120px;
   --nav-h: 77px;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 *,
@@ -92,6 +92,8 @@ ol {
 
 /* ---------- Layout ---------- */
 .container {
+  position: relative;
+  z-index: 2;
   width: min(var(--container), calc(100% - var(--gutter) * 2));
   margin-inline: auto;
 }
@@ -127,15 +129,20 @@ em.serif,
 }
 
 .eyebrow b {
-  font-weight: 500;
+  display: inline-block;
+  margin-right: 8px;
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
   color: var(--ink);
 }
 
 .h-section {
   font-family: var(--font-serif), Georgia, serif;
-  font-size: clamp(48px, 6.4vw, 76px);
-  line-height: 1;
-  letter-spacing: -0.015em;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   color: var(--ink);
 }
 
@@ -249,8 +256,8 @@ em.serif,
 /* Reveal on scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transform: translateY(40px);
+  transition: opacity 1s var(--ease), transform 1s var(--ease);
 }
 
 .reveal.is-in {
@@ -273,4 +280,12 @@ em.serif,
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+@media (max-width: 560px) {
+  :root { --gutter: 20px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body[data-cursor="true"], body[data-cursor="true"] a, body[data-cursor="true"] button, body[data-cursor="true"] input, body[data-cursor="true"] textarea { cursor: none; }
 }

@@ -1,4 +1,4 @@
-import { SectionHeader, Window } from "@/components/ui";
+import { SectionHeader } from "@/components/ui";
 import styles from "./Experience.module.css";
 
 const jobs = [
@@ -41,10 +41,9 @@ export default function Experience() {
             </>
           }
         />
-        <Window title="experience.log — git log --career" className="reveal">
-          <ol className={styles.log}>
+        <ol className={styles.log}>
             {jobs.map((j, i) => (
-              <li key={j.hash} className={styles.entry}>
+              <li key={j.hash} className={`reveal ${styles.entry}`}>
                 <div className={styles.rail} aria-hidden>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -69,8 +68,7 @@ export default function Experience() {
                 </div>
               </li>
             ))}
-          </ol>
-        </Window>
+        </ol>
       </div>
     </section>
   );

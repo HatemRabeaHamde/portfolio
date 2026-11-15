@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Glow } from "@/components/ui";
 import { projects, projectCount, projectHref, projectNo, type Category } from "@/lib/projects";
 import styles from "./work.module.css";
@@ -22,7 +22,18 @@ const previewStrip = ["saedni", "machine-rental", "westclean"]
   .filter(Boolean);
 
 export default function WorkList() {
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const [filter, setFilter] = useState<Category | "all">("all");
+  useEffect(() => {
+    const hidePreview = () => setPreview(null);
+    window.addEventListener("scroll", hidePreview, { passive: true });
+    window.addEventListener("blur", hidePreview);
+    return () => {
+      window.removeEventListener("scroll", hidePreview);
+      window.removeEventListener("blur", hidePreview);
+    };
+  }, []);
   const list = useMemo(
     () => (filter === "all" ? projects : projects.filter((p) => p.categories.includes(filter))),
     [filter],
@@ -71,15 +82,23 @@ export default function WorkList() {
           <ul className={styles.list} aria-live="polite">
             {list.map((p) => (
               <li key={p.slug}>
-                <Link href={projectHref(p)} className={styles.row}>
+                <Link href={projectHref(p)} className={styles.row} data-cursor="view"
+                  onPointerMove={(event) => {
+                    if (event.pointerType !== "mouse" || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+                    if (previewRef.current) {
+                      previewRef.current.style.left = `${Math.min(window.innerWidth - 364, Math.max(24, event.clientX + 32))}px`;
+                      previewRef.current.style.top = `${Math.min(window.innerHeight - 254, Math.max(24, event.clientY - 115))}px`;
+                    }
+                    setPreview(p.slug);
+                  }}
+                  onPointerLeave={() => setPreview(null)}
+                  onClick={() => setPreview(null)}
+                >
                   <span className={styles.no}>{projectNo(p)}</span>
                   <span className={styles.name}>{p.title}</span>
                   <span className={styles.type}>{p.type}</span>
                   <span className={styles.stack}>{p.tags.slice(0, 3).join(" · ")}</span>
                   <span className={styles.end}>
-                    <span className={styles.thumb}>
-                      <Image src={p.image} alt="" fill sizes="200px" style={p.imagePosition ? { objectPosition: p.imagePosition } : undefined} />
-                    </span>
                     <span className={styles.arrow} aria-hidden>
                       ↗
                     </span>
@@ -99,6 +118,9 @@ export default function WorkList() {
           </div>
         </div>
       </section>
+      <div ref={previewRef} className={styles.preview} data-visible={preview ? "true" : undefined} aria-hidden>
+        {projects.map((p) => <Image key={p.slug} src={p.image} alt="" fill sizes="340px" data-active={preview === p.slug || undefined} style={{ objectPosition: p.imagePosition }} />)}
+      </div>
     </>
   );
 }

@@ -13,19 +13,14 @@ export default function Hero() {
       <div className={styles.stage}>
         <div className={styles.portrait}>
           <Image
-            src="/images/portrait.png"
+            src="/images/portrait-editorial.jpg"
             alt="Portrait of Hatem Rabea"
             fill
             preload
             sizes="(max-width: 900px) 100vw, 467px"
             className={styles.portraitImg}
           />
-          <span className={styles.blendLeft} aria-hidden />
-          <span className={styles.blendRight} aria-hidden />
-          {/* Same cutout, layered above the scroll thread so the line passes behind the head. */}
-          <div className={styles.front} aria-hidden data-thread-portrait>
-            <Image src="/images/portrait.png" alt="" fill sizes="467px" className={styles.portraitImg} />
-          </div>
+
         </div>
 
         <p className={styles.vertical} aria-hidden>
@@ -56,7 +51,7 @@ export default function Hero() {
               It&apos;s Hatem <em>Rabea</em>
             </span>{" "}
             — a full-stack developer taking SaaS, marketplaces
-            <br className={styles.br} /> and payment products from MVP to production.
+            {" "}and payment products from MVP to production.
           </p>
         </div>
 

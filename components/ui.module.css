@@ -12,7 +12,7 @@
 .titlebar {
   display: flex;
   align-items: center;
-  height: 48px;
+  height: 46px;
   padding: 0 73px 0 18px;
   background: var(--surface-2);
   border-bottom: 1px solid var(--line);
@@ -45,11 +45,11 @@
 }
 
 .browser[data-shadow="box"] {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
 }
 
 .browser[data-shadow="drop"] {
-  filter: drop-shadow(0 30px 30px rgba(0, 0, 0, 0.08));
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
 }
 
 .bar {
@@ -101,8 +101,8 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 140px 160px 0;
-  max-width: 1440px;
+  padding: 120px max(var(--gutter), calc((100% - 1120px) / 2)) 0;
+  max-width: none;
   margin-inline: auto;
 }
 
@@ -113,7 +113,7 @@
 .divider span {
   flex: 1;
   height: 1px;
-  background: rgba(10, 10, 10, 0.45);
+  background: var(--line);
 }
 
 .divider img {
@@ -132,7 +132,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 32px;
+  gap: 40px;
 }
 
 .headerText {
