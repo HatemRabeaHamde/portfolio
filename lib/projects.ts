@@ -910,101 +910,6 @@ export const projects: Project[] = [
   },
   /* ------------------------------------------------------------------ */
   {
-    slug: "saedni",
-    title: "Saedni",
-    kicker: "AUTOMOTIVE · SUBSCRIPTIONS",
-    type: "Automotive services · KSA",
-    summary:
-      "Bilingual platform for vehicle subscriptions, inspections, towing and replacement car rentals — with a security-first MyFatoorah payment lifecycle.",
-    tags: ["Laravel 12", "MyFatoorah", "Firebase", "Pest"],
-    domain: "saedni",
-    image: "/images/projects/saedni/06-landing-page.png",
-    imagePosition: "top",
-    categories: ["saas", "payments"],
-    caseStudy: {
-      tagline: "AUTOMOTIVE SERVICES · SUBSCRIPTIONS · RIYADH",
-      summary:
-        "A bilingual automotive service platform powering a mobile app and an admin dashboard: per-vehicle subscriptions, inspections, towing, replacement car rentals, repair reports, payments, notifications and OTP login.",
-      meta: [
-        ["ROLE", "Full-Stack Developer"],
-        ["ENGAGEMENT", "Freelance · client in Saudi Arabia"],
-        ["SURFACES", "Mobile API · Admin dashboard · Landing"],
-        ["STACK", "Laravel 12 · PHP 8.3 · MyFatoorah · Pest"],
-      ],
-      badge: "MOBILE · ADMIN · AR / EN",
-      stats: [
-        { value: "6", text: "payment purposes on one verified lifecycle" },
-        { value: "60", text: "day delayed-activation window, run by scheduled jobs" },
-        { value: "1:1", text: "subscription per vehicle, priced by manufacturer origin" },
-        { value: "AR/EN", text: "full RTL / LTR support across app and dashboard" },
-      ],
-      overview: {
-        challenge:
-          "Subscriptions and money had to stay correct even when webhooks are late, mobile requests retry, and webhook and manual verification arrive at the same moment.",
-        role: "Built the backend workflows — subscriptions, payments, service fulfilment, notifications — and the admin dashboard on top of them.",
-        outcome:
-          "Payments as a first-class domain with row locks, amount checks and idempotent fulfilment, plus feature tests for the money-sensitive flows.",
-      },
-      useCases: [
-        {
-          actor: "Vehicle owner",
-          items: [
-            "Register several vehicles — brand, model, year, VIN, plate, origin",
-            "Subscribe each vehicle: activate now with an inspection fee, or within 60 days",
-            "Request towing, a replacement car, or both",
-            "Pay inspection fees, subscriptions, renewals, towing, rentals and repair costs",
-            "Sign in with OTP and get push notifications for key events",
-          ],
-        },
-        {
-          actor: "Admin",
-          items: [
-            "Manage plans priced per manufacturer origin, towing and rental rates",
-            "Complete or reject inspections",
-            "Deliver and receive replacement cars; the system calculates days and cost",
-            "Attach inspection or repair reports with PDFs and amounts",
-            "Review payments by purpose and state",
-          ],
-        },
-      ],
-      flow: {
-        label: "PAYMENT LIFECYCLE",
-        title: "Money that ",
-        titleEm: "can't drift",
-        lede: "Every purpose — from inspection fees to repair costs — runs through the same verified lifecycle.",
-        steps: [
-          { title: "Pending", text: "A payment is created and linked to what it pays for." },
-          { title: "Checkout", text: "The user pays through MyFatoorah." },
-          { title: "Verify", text: "Callback, webhook or manual fallback — row-locked." },
-          { title: "Check", text: "Amount, invoice and customer reference must match." },
-          { title: "Fulfil", text: "Idempotent, even if two confirmations race." },
-        ],
-        hot: 2,
-        notes: ["Polymorphic payments table", "Idempotency middleware on mobile requests", "Unpaid requests stay hidden"],
-      },
-      screenshots: [
-        { src: "/images/projects/saedni/02-dashboard.png", caption: "Operational dashboard — users, subscriptions, bookings, reports" },
-        { src: "/images/projects/saedni/03-subscription-plans.png", caption: "Plans with origin-based pricing, towing and rental rates" },
-        { src: "/images/projects/saedni/05-payments.png", caption: "Payments by purpose with paid / pending / failed states" },
-        { src: "/images/projects/saedni/06-landing-page.png", caption: "Public Arabic landing page for the mobile service" },
-      ],
-      engineering: [
-        { problem: "Webhooks can arrive late", built: "A manual POST /payment/{id}/verify fallback for mobile, safe to call alongside the webhook." },
-        { problem: "Webhook and manual verify racing", built: "Row-level locking while verifying, and idempotent fulfilment." },
-        { problem: "Tampered or mismatched payments", built: "Amount-mismatch detection plus invoice and customer reference validation." },
-        { problem: "Mobile retries on flaky networks", built: "Idempotency middleware for retry-safe requests." },
-        { problem: "Half-paid bookings cluttering the app", built: "Unpaid service requests stay hidden until payment completes." },
-        { problem: "Status chaos across bookings, rentals and reports", built: "Enums for explicit transitions, Action classes for each workflow, scheduled jobs for expiry." },
-      ],
-      stack: ["Laravel 12", "PHP 8.3", "Sanctum", "MyFatoorah", "Firebase FCM", "Spatie Permission", "Spatie Translatable", "OTP / SMS", "Blade", "Pest"],
-      quote: "Reliable billing is verification, duplicate protection and safe fulfilment.",
-      quoteSource: "ON THE PAYMENT LIFECYCLE",
-      links: [{ icon: "gh", kicker: "SOURCE · GITHUB", label: "saedniapp ↗", href: `${GH}/saedniapp.public` }],
-    },
-  },
-
-  /* ------------------------------------------------------------------ */
-  {
     slug: "tourstica",
     title: "Tourstica",
     kicker: "TRAVEL · BOOKING MARKETPLACE",
@@ -1197,6 +1102,101 @@ export const projects: Project[] = [
       ],
     },
   },
+  /* ------------------------------------------------------------------ */
+  {
+    slug: "saedni",
+    title: "Saedni",
+    kicker: "AUTOMOTIVE · SUBSCRIPTIONS",
+    type: "Automotive services · KSA",
+    summary:
+      "Bilingual platform for vehicle subscriptions, inspections, towing and replacement car rentals — with a security-first MyFatoorah payment lifecycle.",
+    tags: ["Laravel 12", "MyFatoorah", "Firebase", "Pest"],
+    domain: "saedni",
+    image: "/images/projects/saedni/06-landing-page.png",
+    imagePosition: "top",
+    categories: ["saas", "payments"],
+    caseStudy: {
+      tagline: "AUTOMOTIVE SERVICES · SUBSCRIPTIONS · RIYADH",
+      summary:
+        "A bilingual automotive service platform powering a mobile app and an admin dashboard: per-vehicle subscriptions, inspections, towing, replacement car rentals, repair reports, payments, notifications and OTP login.",
+      meta: [
+        ["ROLE", "Full-Stack Developer"],
+        ["ENGAGEMENT", "Freelance · client in Saudi Arabia"],
+        ["SURFACES", "Mobile API · Admin dashboard · Landing"],
+        ["STACK", "Laravel 12 · PHP 8.3 · MyFatoorah · Pest"],
+      ],
+      badge: "MOBILE · ADMIN · AR / EN",
+      stats: [
+        { value: "6", text: "payment purposes on one verified lifecycle" },
+        { value: "60", text: "day delayed-activation window, run by scheduled jobs" },
+        { value: "1:1", text: "subscription per vehicle, priced by manufacturer origin" },
+        { value: "AR/EN", text: "full RTL / LTR support across app and dashboard" },
+      ],
+      overview: {
+        challenge:
+          "Subscriptions and money had to stay correct even when webhooks are late, mobile requests retry, and webhook and manual verification arrive at the same moment.",
+        role: "Built the backend workflows — subscriptions, payments, service fulfilment, notifications — and the admin dashboard on top of them.",
+        outcome:
+          "Payments as a first-class domain with row locks, amount checks and idempotent fulfilment, plus feature tests for the money-sensitive flows.",
+      },
+      useCases: [
+        {
+          actor: "Vehicle owner",
+          items: [
+            "Register several vehicles — brand, model, year, VIN, plate, origin",
+            "Subscribe each vehicle: activate now with an inspection fee, or within 60 days",
+            "Request towing, a replacement car, or both",
+            "Pay inspection fees, subscriptions, renewals, towing, rentals and repair costs",
+            "Sign in with OTP and get push notifications for key events",
+          ],
+        },
+        {
+          actor: "Admin",
+          items: [
+            "Manage plans priced per manufacturer origin, towing and rental rates",
+            "Complete or reject inspections",
+            "Deliver and receive replacement cars; the system calculates days and cost",
+            "Attach inspection or repair reports with PDFs and amounts",
+            "Review payments by purpose and state",
+          ],
+        },
+      ],
+      flow: {
+        label: "PAYMENT LIFECYCLE",
+        title: "Money that ",
+        titleEm: "can't drift",
+        lede: "Every purpose — from inspection fees to repair costs — runs through the same verified lifecycle.",
+        steps: [
+          { title: "Pending", text: "A payment is created and linked to what it pays for." },
+          { title: "Checkout", text: "The user pays through MyFatoorah." },
+          { title: "Verify", text: "Callback, webhook or manual fallback — row-locked." },
+          { title: "Check", text: "Amount, invoice and customer reference must match." },
+          { title: "Fulfil", text: "Idempotent, even if two confirmations race." },
+        ],
+        hot: 2,
+        notes: ["Polymorphic payments table", "Idempotency middleware on mobile requests", "Unpaid requests stay hidden"],
+      },
+      screenshots: [
+        { src: "/images/projects/saedni/02-dashboard.png", caption: "Operational dashboard — users, subscriptions, bookings, reports" },
+        { src: "/images/projects/saedni/03-subscription-plans.png", caption: "Plans with origin-based pricing, towing and rental rates" },
+        { src: "/images/projects/saedni/05-payments.png", caption: "Payments by purpose with paid / pending / failed states" },
+        { src: "/images/projects/saedni/06-landing-page.png", caption: "Public Arabic landing page for the mobile service" },
+      ],
+      engineering: [
+        { problem: "Webhooks can arrive late", built: "A manual POST /payment/{id}/verify fallback for mobile, safe to call alongside the webhook." },
+        { problem: "Webhook and manual verify racing", built: "Row-level locking while verifying, and idempotent fulfilment." },
+        { problem: "Tampered or mismatched payments", built: "Amount-mismatch detection plus invoice and customer reference validation." },
+        { problem: "Mobile retries on flaky networks", built: "Idempotency middleware for retry-safe requests." },
+        { problem: "Half-paid bookings cluttering the app", built: "Unpaid service requests stay hidden until payment completes." },
+        { problem: "Status chaos across bookings, rentals and reports", built: "Enums for explicit transitions, Action classes for each workflow, scheduled jobs for expiry." },
+      ],
+      stack: ["Laravel 12", "PHP 8.3", "Sanctum", "MyFatoorah", "Firebase FCM", "Spatie Permission", "Spatie Translatable", "OTP / SMS", "Blade", "Pest"],
+      quote: "Reliable billing is verification, duplicate protection and safe fulfilment.",
+      quoteSource: "ON THE PAYMENT LIFECYCLE",
+      links: [{ icon: "gh", kicker: "SOURCE · GITHUB", label: "saedniapp ↗", href: `${GH}/saedniapp.public` }],
+    },
+  },
+
   /* ------------------------------------------------------------------ */
   {
     slug: "machine-rental",

@@ -12,6 +12,11 @@ export const site = {
   cv: "/Hatem-Rabea-CV.pdf",
   location: "Cairo, EG",
   year: 2026,
+  /** Credit for the portfolio's design, shown in every footer. */
+  designer: {
+    name: "Senior Hager",
+    linkedin: "https://www.linkedin.com/in/hager-tarek-7003b73a6/",
+  },
 };
 
 export const navLinks = [

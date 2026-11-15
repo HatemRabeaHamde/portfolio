@@ -1,4 +1,5 @@
 import Logo from "@/components/Logo";
+import { DesignCredit } from "@/components/ui";
 import { site, socials } from "@/lib/site";
 import styles from "./ContactCta.module.css";
 
@@ -38,6 +39,7 @@ export default function ContactCta() {
           ))}
         </ul>
         <div className={styles.meta}>
+          <DesignCredit />
           <p>
             © {site.year} {site.name}
           </p>

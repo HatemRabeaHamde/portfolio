@@ -181,16 +181,30 @@ function buildPath(main: HTMLElement): { d: string; w: number; h: number } | nul
     } else {
       run(lane(side), y, a0, side);
     }
+    // The finish: a wide round turn out of the right margin, a glide towards the centre above the
+    // footer, and a small signature curl to end on.
     const g0 = contactTextBottom + PAD;
     const g1 = footerTop - PAD * 0.6;
-    run(lane(side), a1 - 12, g0, side);
+    const gm = (g0 + g1) / 2;
     const xf = lane(side);
+    const rb = Math.max(80, Math.min(260, (xf - w / 2) * 0.55, gm - (a1 - 12) - 60)); // radius of the turn
+    run(lane(side), a1 - 12, gm - rb, side);
+    const turn = (deg: number): Pt => {
+      const t = (deg * Math.PI) / 180;
+      return [xf - rb + rb * Math.cos(t), gm - rb + rb * Math.sin(t)];
+    };
+    pts.push([xf, gm - rb], turn(30), turn(60), [xf - rb, gm]);
+    const r = Math.max(10, Math.min(24, (g1 - g0) / 4)); // the closing curl
+    const cx = w / 2 + r;
     pts.push(
-      [xf, g0],
-      [xf - side * (gutter * 0.2), g0 + (g1 - g0) * 0.7],
-      [w / 2 + (xf - w / 2) * 0.55, g1 - 6],
-      [w / 2, g1 - 2],
-      [w / 2 - side * 40, g1 + 4],
+      [(xf - rb + cx) / 2, gm + 4],
+      [cx + r * 1.4, gm + r * 0.6],
+      [cx, gm + r],
+      [cx - r, gm],
+      [cx, gm - r],
+      [cx + r * 0.8, gm - r * 0.2],
+      [cx - r * 0.4, gm + r * 0.9],
+      [cx - r * 3.4, gm + r * 0.4],
     );
   } else {
     run(lane(side), y, h + 40, side);
