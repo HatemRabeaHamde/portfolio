@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: `%s — ${site.name}`,
   },
   description:
-    "Full-stack developer building SaaS platforms, marketplaces and payment integrations with Laravel, Node.js and React.",
+    "Senior full-stack developer taking SaaS, marketplaces and payment products from MVP to production — Laravel, NestJS, React, Scrum.",
 };
 
 export const viewport: Viewport = {

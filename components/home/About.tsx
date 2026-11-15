@@ -2,10 +2,10 @@ import { SectionHeader, Window } from "@/components/ui";
 import styles from "./About.module.css";
 
 const principles = [
-  { title: "Clean architecture", text: "Maintainable service boundaries that scale with the product." },
-  { title: "Verified payments", text: "Payment events, idempotency and database consistency." },
-  { title: "Performance", text: "Query optimization and caching where it matters." },
-  { title: "AR / EN ready", text: "Arabic & English localization built in from day one." },
+  { title: "MVP first", text: "Ship the smallest version that proves the idea, then validate it with real users before scaling." },
+  { title: "Agile delivery", text: "Scrum sprints, clear task breakdown and code review — small releases, no surprises." },
+  { title: "Safe releases", text: "Tested, health-checked deploys with rollback — and a live server move with zero user-visible downtime." },
+  { title: "Money done right", text: "Verified webhooks, idempotency and row locks — every payment and point counted once." },
 ];
 
 const K = ({ children }: { children: React.ReactNode }) => <span className={styles.k}>{children}</span>;
@@ -37,14 +37,19 @@ export default function About() {
             <div className={styles.readmeBody}>
               <p className={styles.h}># Hatem Rabea</p>
               <p>
-                I&apos;m a full-stack web developer with 4+ years of experience delivering SaaS platforms,
-                marketplaces, booking systems and payment integrations for clients across Egypt, the Gulf and
-                Europe.
+                I&apos;m a full-stack developer with 4+ years shipping SaaS platforms, marketplaces, booking
+                systems and payment integrations for clients across Egypt, the Gulf and Europe — 10+ of them
+                live in production, in Arabic and English.
               </p>
               <p>
-                I own the work end to end — from API design and database architecture to the interface people
-                actually use — with a focus on maintainable services, verified payment events, performance and
-                Arabic/English localization.
+                I work the way product teams do: Scrum sprints, an MVP first, then validate with real users and
+                iterate. I own the work end to end — API and database design, the interface people use, and
+                the release that gets it to production safely.
+              </p>
+              <p>
+                Recent results: a live backend moved to new servers with zero user-visible downtime, a team led
+                from a supply-chain attack to a clean, scanned pipeline in 3 days, and 1,169 tests gating
+                every deploy.
               </p>
             </div>
           </Window>
@@ -58,7 +63,8 @@ export default function About() {
                 {"\n"}            <S>&quot;Node.js&quot;</S>, <S>&quot;NestJS&quot;</S>],
                 {"\n"}  frontend: [<S>&quot;React&quot;</S>, <S>&quot;Next.js&quot;</S>,
                 {"\n"}             <S>&quot;TypeScript&quot;</S>],
-                {"\n"}  focus: <S>&quot;SaaS · payments&quot;</S>,
+                {"\n"}  ships: <S>&quot;MVP → validate → scale&quot;</S>,
+                {"\n"}  process: <S>&quot;Scrum · Agile&quot;</S>,
                 {"\n"}  based: <S>&quot;Cairo, Egypt&quot;</S>,
                 {"\n"}
                 {"};"}

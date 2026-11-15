@@ -55,8 +55,8 @@ export default function Hero() {
             <span className={styles.me}>
               It&apos;s Hatem <em>Rabea</em>
             </span>{" "}
-            — a full-stack developer building SaaS
-            <br className={styles.br} /> platforms, marketplaces and payment integrations.
+            — a full-stack developer taking SaaS, marketplaces
+            <br className={styles.br} /> and payment products from MVP to production.
           </p>
         </div>
 

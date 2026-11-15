@@ -8,7 +8,7 @@ const jobs = [
     present: true,
     title: "Senior Full-Stack Developer & Team Lead",
     org: "BenJalTech (formerly aiSmarty) · Remote · Poland",
-    note: "Leading the team and building the React frontend and NestJS backend of an AI Shopify content platform.",
+    note: "Leading the team in Scrum sprints across the React frontend and NestJS backend of a Shopify SaaS — and leading the recovery from a supply-chain attack in 3 days.",
   },
   {
     hash: "7d2e84",
@@ -24,7 +24,7 @@ const jobs = [
     present: true,
     title: "Freelance Full-Stack Developer & Tech Lead",
     org: "Self-employed · Clients in KSA & UAE",
-    note: "10+ production platforms, incl. Haya’s live backend — Jenkins deploys on Oracle Cloud, 4+ payment gateways, up to 55% faster APIs.",
+    note: "10+ production platforms delivered on time — incl. Haya’s live backend, moved servers with zero user-visible downtime; 4+ payment gateways, up to 55% faster APIs.",
   },
 ];
 

@@ -163,7 +163,7 @@ export const projects: Project[] = [
     kicker: "BACKEND · PRODUCTION INFRASTRUCTURE",
     type: "Backend & production · KSA",
     summary:
-      "Arabic social app with reels, chat, payments and store loyalty. I extend its Laravel backend and help run it in production on Oracle Cloud with Jenkins deploys — including a server move and a Cloudflare → Bunny video rollout that users never noticed.",
+      "Arabic social app with reels, chat, payments and store loyalty. I extend its Laravel backend and help run it in production on Oracle Cloud with Jenkins deploys — including a production server move with zero user-visible downtime and a Cloudflare → Bunny video rollout.",
     tags: ["Laravel 10", "Jenkins CI/CD", "Oracle Cloud (OCI)", "Nginx · PHP-FPM", "Grafana · Loki", "Bunny Stream", "WebSockets", "PHPUnit"],
     domain: "hayaapp.sa",
     image: "/images/projects/haya/cover.png",
@@ -365,7 +365,7 @@ export const projects: Project[] = [
           { value: "1,169", label: "tests passing, 4,334 assertions", context: "Last documented run; one pre-existing deprecation warning." },
         ],
         outcomes: [
-          { title: "Server move without user-visible change", text: "The production backend moved to new servers and the app stayed the same for users. Confirmed delivery outcome." },
+          { title: "Zero user-visible downtime", text: "The production backend moved to new servers and the app stayed the same for users. Confirmed delivery outcome — no uptime percentage is claimed." },
           { title: "Reels provider rollout", text: "Bunny Stream added beside Cloudflare Stream while older app versions kept working." },
           { title: "Deploys that can switch back", text: "Releases go live by symlink, are health-checked, and the app switches back automatically if the check fails." },
         ],
@@ -643,7 +643,7 @@ export const projects: Project[] = [
       overview: {
         challenge:
           "Merchants with large Shopify catalogs need product copy, images and SEO metadata generated, checked and published — without copy-pasting model output or waiting on a frozen screen.",
-        role: "Full-stack developer across the React frontend and the NestJS backend, and I lead the team's planning and code review. Cloud infrastructure and deployment belong to a separate team; models are used through provider APIs, not trained here.",
+        role: "Full-stack developer across the React frontend and the NestJS backend, and I lead the team's Scrum planning, MVP scoping and code review. Cloud infrastructure and deployment belong to a separate team; models are used through provider APIs, not trained here.",
         outcome:
           "One workspace: generation runs in background workers, output is validated and scored before review, edits are versioned, approved content goes back to Shopify, and usage is billed once even when jobs retry.",
       },
