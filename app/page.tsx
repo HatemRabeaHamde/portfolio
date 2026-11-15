@@ -4,6 +4,7 @@ import About from "@/components/home/About";
 import Projects from "@/components/home/Projects";
 import Skills from "@/components/home/Skills";
 import Experience from "@/components/home/Experience";
+import Leadership from "@/components/home/Leadership";
 import ContactCta from "@/components/home/ContactCta";
 import Thread from "@/components/home/Thread";
 import { Divider } from "@/components/ui";
@@ -20,6 +21,8 @@ export default function Home() {
       <Skills />
       <Divider />
       <Experience />
+      <Divider />
+      <Leadership />
       <div style={{ height: 62 }} />
       <ContactCta />
       <Thread />

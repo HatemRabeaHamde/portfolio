@@ -16,7 +16,7 @@ const jobs = [
     present: false,
     title: "Full-Stack Developer",
     org: "European Tech Company · Remote · Europe",
-    note: "Sole web developer on a machine rental platform — Laravel + React, booking engine, OTP, Firebase.",
+    note: "Sole web developer on a machine rental platform — owned it end to end: Laravel + React, booking engine, OTP, Firebase.",
   },
   {
     hash: "1b6c0f",
@@ -24,7 +24,7 @@ const jobs = [
     present: true,
     title: "Freelance Full-Stack Developer & Tech Lead",
     org: "Self-employed · Clients in KSA & UAE",
-    note: "10+ production platforms delivered on time — incl. Haya’s live backend, moved servers with zero user-visible downtime; 4+ payment gateways, up to 55% faster APIs.",
+    note: "Leading delivery for clients — scope, estimates and on-time releases across 10+ production platforms; incl. Haya’s live backend, moved servers with zero user-visible downtime. 4+ payment gateways, up to 55% faster APIs.",
   },
 ];
 

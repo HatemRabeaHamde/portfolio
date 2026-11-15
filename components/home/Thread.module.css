@@ -8,11 +8,12 @@
   clip-path: inset(0 0 var(--drawn) 0);
 }
 
-.svg {
+.artwork {
   position: absolute;
   inset: 0;
   display: block;
-  overflow: visible;
+  max-width: none;
+  transform-origin: top left;
 }
 
 @media (max-width: 900px) {
